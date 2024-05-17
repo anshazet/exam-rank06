@@ -66,7 +66,7 @@ int main(int ac, char **av)
 				continue;
 			if (id == server)
 			{
-				if ((client == accept(server, NULL, NULL)) < 0)
+				if ((client = accept(server, NULL, NULL)) < 0)
 					ft_error();
 				if (client < size)
 					size = client;
