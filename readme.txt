@@ -1,5 +1,3 @@
-# exam-rank06
-
 Assignment name  : mini_serv
 Expected files   : mini_serv.c
 Allowed functions: write, close, select, socket, accept, listen, send, recv, bind, strstr, malloc, realloc, free, calloc, bzero, atoi, sprintf, strlen, exit, strcpy, strcat, memset
@@ -44,17 +42,17 @@ Hint: you should use nc to test your program
 Hint: To test you can use fcntl(fd, F_SETFL, O_NONBLOCK) but use select and NEVER check EAGAIN (man 2 send)
 
 
-To test the program:
+Pour tester le programme:
 
--Launch the program followed, as an argument, by the chosen port.
+-Lancer le programme suivi, en argument, du port choisit.
 
--Open at least two other terminal windows and enter "nc + localhost + 'port number'" in each
+-Ouvrir au moins deux autres fenetres de terminal et saisir sur chacunes "nc + localhost + 'numero de port'"
 
--After connecting the first terminal, when you connect other terminals there should be the message
-"server: client x just arrived\n" on terminals already connected.
+-Apres avoir connecte le premier terminal, lorsaue vous connectez d'autres terminaux il doit y avoir le message
+"server: client x just arrived\n" sur les terminaux deja connectes.
 
--To send a customer's message, there must be the message "client 'x': 'your message'" on the others
-terminals. Also test by copying your entire file and pasting it to send it as a message.
-It must be returned in the same manner.
+-Pour l'envoi du message d'un client il faut qu'il y ait le message "client 'x': 'votre message'" sur les autres
+terminaux. Testez egalement en copiant tout votre fichier et en le collant pour l'envoyer en message.
+Il doit etre retourne de la meme maniere.
 
--When one of the clients disconnects from nc, the others should receive the message "server: client 'x' just left\n".
+-Lorsqu'un des clients se deconnecte de nc, les autres doivent recevoir le message "server: client 'x' just left\n".
