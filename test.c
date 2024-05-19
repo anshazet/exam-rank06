@@ -6,6 +6,7 @@
 #include <netinet/in.h>
 
 #include <strings.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/select.h>
