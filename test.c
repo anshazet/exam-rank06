@@ -5,9 +5,9 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-#include <stdlib.h>
 #include <strings.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/select.h>
 
 void ft_error()
@@ -25,24 +25,24 @@ void send_all(char *buffer, int server, int client, int size)
 
 int main(int ac, char **av)
 {
-	int server, client, size, readed, db[65535] = {0}, client_id = 0;
+	int server, client, size, readed, db[65535] = {0}, limit = 0;
 	struct sockaddr_in servaddr;
-	char buffer[200000], buffer2[150000];
 	fd_set old_fd, new_fd;
+	char buffer[2000000], buffer2[1500000];
 
 	if (ac != 2)
 	{
-		write(2, "Wrong number of arguments", 26);
+		write(2, "Wrong number of arguments\n", 26);
 		exit(1);
 	}
 
 	server = socket(AF_INET, SOCK_STREAM, 0);
 	if (server == -1)
 		ft_error();
-
 	bzero(&servaddr, sizeof(servaddr));
+
 	servaddr.sin_family = AF_INET;
-	servaddr.sin_addr.s_addr = htonl(2130706433);
+	servaddr.sin_addr.s_addr = htonl(2130706433); // 127.0.0.1
 	servaddr.sin_port = htons(atoi(av[1]));
 
 	if ((bind(server, (const struct sockaddr *)&servaddr, sizeof(servaddr))) != 0)
@@ -68,23 +68,23 @@ int main(int ac, char **av)
 			{
 				if ((client = accept(server, NULL, NULL)) < 0)
 					ft_error();
-				if (client < size)
+				if (client > size)
 					size = client;
-				db[client] = client_id++;
+				db[client] = limit++;
 				FD_SET(client, &new_fd);
-				sprintf(buffer, "server: client %d just arrived", db[client]);
+				sprintf(buffer, "server: client %d just arrived\n", db[client]);
 				send_all(buffer, server, client, size);
 			}
 			else
 			{
-				bzero(buffer, 200000);
-				bzero(buffer2, 150000);
+				bzero(buffer, 2000000);
+				bzero(buffer2, 1500000);
 				readed = 1;
-				while (readed == 1 && (!buffer2[0] || buffer[strlen(buffer2) - 1] != '\n'))
+				while (readed == 1 && (!buffer2[0] || buffer2[strlen(buffer2) - 1] != '\n'))
 					readed = recv(id, &buffer2[strlen(buffer2)], 1, 0);
-				if (readed == 0) //<=0
+				if (readed == 0) // <=
 				{
-					sprintf(buffer, "server: client %d just left", db[id]);
+					sprintf(buffer, "server: client %d just left\n", db[id]);
 					send_all(buffer, server, id, size);
 					FD_CLR(id, &new_fd);
 					close(id);
@@ -92,7 +92,7 @@ int main(int ac, char **av)
 				else
 				{
 					sprintf(buffer, "client %d: %s", db[id], buffer2);
-					send_all(buffer, server, client, size);
+					send_all(buffer, server, id, size);
 				}
 			}
 		}

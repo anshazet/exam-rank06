@@ -24,7 +24,7 @@ void send_all(char *buffer, int server, int client, int size)
 
 int main(int ac, char **av)
 {
-	int server, client, size, readed, db[65535] = {0}, client_id = 0;
+	int server, client, size, readed, db[65535] = {0}, limit = 0;
 	struct sockaddr_in servaddr;
 	fd_set old_fd, new_fd;
 	char buffer[400000], buffer2[450000];
@@ -69,7 +69,7 @@ int main(int ac, char **av)
 					ft_error();
 				if (client > size)
 					size = client;
-				db[client] = client_id++;
+				db[client] = limit++;
 				FD_SET(client, &new_fd);
 				sprintf(buffer, "server: client %d just arrived\n", db[client]);
 				send_all(buffer, server, client, size);
